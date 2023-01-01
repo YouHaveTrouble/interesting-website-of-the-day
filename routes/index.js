@@ -36,6 +36,7 @@ router.get('/', async function (req, res, next) {
       fs.writeFile('./current.json', JSON.stringify(website));
       render(res, website);
     });
+    connection.end();
     return;
   }
   render(res, website);

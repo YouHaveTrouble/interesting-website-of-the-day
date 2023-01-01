@@ -1,5 +1,15 @@
 {% extends 'layout.twig' %}
 
+{% block meta %}
+  <meta name="title" content="{{ title }}" />
+  <meta name="description" content="Today's interesting website: {{ website.title }}" />
+  <meta property="twitter:title" content="{{ title }}" />
+  <meta property="twitter:description" content="Today's interesting website: {{ website.title }}" />
+  <meta property="og:title" content="{{ title }}" />
+  <meta property="og:url" content="https://purpurmc.org" />
+  <meta property="og:description" content="Today's interesting website: {{ website.title }}" />
+{% endblock %}
+
 {% block body %}
   <h1>Interesting website of the day:</h1>
   <a href="{{ website.url }}" class="websiteEntry" title="{{ website.title }}" target="_blank">
