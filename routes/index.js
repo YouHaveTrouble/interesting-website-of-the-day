@@ -5,15 +5,7 @@ const dotenv = require('dotenv');
 const fs = require('fs/promises');
 dotenv.config();
 
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-});
 
-connection.connect();
 
 /* GET home page. */
 router.get('/', async function (req, res, next) {
@@ -29,6 +21,14 @@ router.get('/', async function (req, res, next) {
       || now.getUTCMonth() !== oldDate.getUTCMonth()
       || now.getUTCFullYear() !== oldDate.getUTCFullYear()
   ) {
+    const connection = mysql.createConnection({
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+    });
+    connection.connect();
     connection.query('select title, description, url from websites order by RAND() limit 1;', (err, result) => {
       if (err) throw err;
       website = result[0];
