@@ -1,0 +1,10 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <h1>Interesting website of the day:</h1>
+  <a href="{{ website.url }}" class="websiteEntry" title="{{ website.title }}" target="_blank">
+    <span class="websiteTitle">{{ website.title }}</span>
+    <span class="websiteDescription">{{ website.description }}</span>
+  </a>
+
+{% endblock %}
