@@ -1,0 +1,30 @@
+---
+export default interface Props {
+  href: string;
+}
+
+const { href } = Astro.props;
+---
+<a href={href} target="_blank">
+  <slot />
+</a>
+
+<style lang="scss" scoped>
+  a {
+    max-width: 100%;
+    width: max-content;
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(0,152,155,1) 0.1%, rgba(0,94,120,1) 94.2% );
+    filter: grayscale(0.5);
+    transition: filter 0.3s ease;
+    border: 1px solid #fff;
+
+    &:hover {
+      filter: grayscale(0.2);
+    }
+  }
+</style>

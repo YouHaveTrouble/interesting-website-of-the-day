@@ -1,0 +1,96 @@
+---
+import mysql from "mysql";
+export const prerender = true;
+import Layout from '../layouts/Layout.astro';
+import ActionButton from "../components/ActionButton.astro";
+import Website from "../models/Website";
+
+async function getRandomWebsite(): Promise<Website | null> {
+	return new Promise((resolve, reject) => {
+		try {
+			const connection = mysql.createConnection({
+				host: import.meta.env.DB_HOST,
+				port: import.meta.env.DB_PORT,
+				user: import.meta.env.DB_USER,
+				password: import.meta.env.DB_PASSWORD,
+				database: import.meta.env.DB_DATABASE,
+			});
+
+			connection.connect();
+
+			connection.query('SELECT url, title, description FROM websites ORDER BY RAND() LIMIT 1;', (err, result) => {
+				if (err) {
+					connection.end();
+					return reject(err);
+				}
+				connection.end();
+				resolve(new Website(result[0]?.url, result[0]?.title, result[0]?.description));
+			});
+		} catch (e) {
+			resolve(null);
+		}
+	});
+}
+
+const website = await getRandomWebsite();
+if (website === null) {
+	throw "Could not fetch a random website";
+}
+---
+
+<Layout>
+	<main>
+		<h1>Today's interesting website:</h1>
+		<article>
+			<p class="name">{website.name}</p>
+			<p class="description">{website.description}</p>
+			<div>
+				<ActionButton href={website.url} >Visit it now!</ActionButton>
+				<ActionButton href="/random" >Try another random one!</ActionButton>
+			</div>
+		</article>
+
+	</main>
+</Layout>
+
+<style lang="scss" scoped>
+	main {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 1rem;
+		text-align: center;
+		line-height: 1;
+		gap: 0.5rem;
+		color: white;
+		h1 {
+			font-weight: 500;
+		}
+		article {
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+			width: (min(100%, 35rem));
+			background-color: rgba(0, 0, 0, 0.35);
+			border-radius: .5rem;
+			padding: 1rem;
+			gap: 1.5rem;
+
+			div {
+				display: flex;
+				flex-wrap: wrap;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+				gap: 1rem;
+			}
+
+			.name {
+				font-size: 1.75rem;
+			}
+		}
+	}
+</style>
