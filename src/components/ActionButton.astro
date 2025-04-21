@@ -1,11 +1,13 @@
 ---
 export default interface Props {
   href: string;
+  newTab?: boolean;
+  alt?: string;
 }
 
-const { href } = Astro.props;
+const { href, newTab = true, alt = undefined } = Astro.props;
 ---
-<a href={href} target="_blank">
+<a href={href} target={newTab ? "_blank" : ""} title={alt} aria-label={alt}>
   <slot />
 </a>
 
@@ -18,7 +20,7 @@ const { href } = Astro.props;
     font-size: 1.2rem;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
-    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(0,152,155,1) 0.1%, rgba(0,94,120,1) 94.2% );
+    background-image: radial-gradient(circle farthest-corner at 10% 20%,  rgba(0,152,155,1) 0.1%, rgba(0,94,120,1) 94.2% );
     filter: grayscale(0.5);
     transition: filter 0.3s ease;
     border: 1px solid #fff;
