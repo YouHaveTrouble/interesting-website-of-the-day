@@ -3,21 +3,21 @@ description: Submit a suggestion for a website to be added to the database.
 labels:
   - "website submission"
 body:
-  - type: textarea
+  - type: input
     attributes:
       label: Website name
       description: The name of the website you want to submit.
       placeholder: "Example Website"
     validations:
       required: true
-  - type: textarea
+  - type: input
     attributes:
       label: Website description
       description: Short summary what the website is about.
       placeholder: "Website to be used for example purposes."
     validations:
       required: true
-  - type: textarea
+  - type: input
     attributes:
       label: Website URL
       description: The URL of the website you want to submit.
