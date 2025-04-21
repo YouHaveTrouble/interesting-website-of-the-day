@@ -1,0 +1,42 @@
+---
+import ActionButton from "../components/ActionButton.astro";
+export const prerender = true;
+import Layout from "../layouts/Layout.astro";
+---
+<Layout>
+  <main>
+    <div>
+      <h1>404</h1>
+      <h2>Not Found</h2>
+    </div>
+    <ActionButton
+        href="/"
+        newTab={false}
+    >
+      Go home
+    </ActionButton>
+  </main>
+</Layout>
+
+<style lang="scss" scoped>
+  main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    color: white;
+    line-height: 1;
+    text-align: center;
+    gap: 1rem;
+    h1 {
+      font-size: 5rem;
+      font-weight: 500;
+    }
+    h2 {
+      font-size: 2rem;
+      font-weight: 500;
+    }
+  }
+</style>
