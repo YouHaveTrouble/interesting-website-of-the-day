@@ -1,4 +1,5 @@
 name: Submit Website
+title: "[Submission] "
 description: Submit a suggestion for a website to be added to the database.
 labels:
   - "website submission"
