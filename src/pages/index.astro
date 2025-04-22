@@ -1,74 +1,11 @@
 ---
 export const prerender = false;
 
-import mysql from "mysql";
+import Website from "../models/Website";
 import Layout from '../layouts/Layout.astro';
 import ActionButton from "../components/ActionButton.astro";
-import Website from "../models/Website";
-import fs from 'fs';
 
-const currentFilePath = 'public/current.json';
-
-async function getRandomWebsite(): Promise<Website | null> {
-	return new Promise((resolve, reject) => {
-		try {
-			const connection = mysql.createConnection({
-				host: import.meta.env.DB_HOST,
-				port: import.meta.env.DB_PORT,
-				user: import.meta.env.DB_USER,
-				password: import.meta.env.DB_PASSWORD,
-				database: import.meta.env.DB_DATABASE,
-			});
-
-			connection.connect();
-
-			connection.query('SELECT url, title, description FROM websites ORDER BY RAND() LIMIT 1;', (err, result) => {
-				if (err) {
-					connection.end();
-					return reject(err);
-				}
-				connection.end();
-				const website = new Website(result[0]?.url, result[0]?.title, result[0]?.description);
-				const data = {
-					url: website.url,
-					title: website.name,
-					description: website.description,
-					date: new Date().toUTCString(),
-				};
-				fs.writeFileSync(currentFilePath, JSON.stringify(data),  {
-					encoding: 'utf8',
-					flag: 'w',
-				});
-				resolve(website);
-			});
-		} catch (e) {
-			resolve(null);
-		}
-	});
-}
-
-async function getNewDailyWebsite(): Promise<Website | null> {
-	const date = new Date();
-	const day = date.getDate();
-	const month = date.getMonth();
-	const year = date.getFullYear();
-	if (!fs.existsSync(currentFilePath)) {
-		return getRandomWebsite();
-	}
-	const data = fs.readFileSync(currentFilePath, {
-		encoding: 'utf8',
-		flag: 'r',
-	});
-	if (!data) return getRandomWebsite();
-	const parsedData = JSON.parse(data);
-	const lastDate = new Date(parsedData.date);
-	if (lastDate.getUTCDate() === day && lastDate.getUTCMonth() === month && lastDate.getUTCFullYear() === year) {
-		return new Website(parsedData.url, parsedData.title, parsedData.description);
-	}
-	return getRandomWebsite();
-}
-
-const website = await getNewDailyWebsite();
+const website = await Website.getCurrentWebsite();
 if (website === null) {
 	throw "Could not fetch a random website";
 }
