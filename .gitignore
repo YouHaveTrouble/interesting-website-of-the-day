@@ -2,6 +2,8 @@
 dist/
 current.json
 
+docker-compose.override.yml
+
 # generated types
 .astro/
 
