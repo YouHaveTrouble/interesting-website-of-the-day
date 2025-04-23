@@ -31,6 +31,7 @@ export default class Website {
         encoding: 'utf8',
         flag: 'w',
       });
+      resolve(website);
     });
   }
 
