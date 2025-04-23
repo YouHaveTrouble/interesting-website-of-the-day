@@ -14,3 +14,9 @@ services:
       DB_USER: database_username
       DB_DATABASE: database_name
     restart: unless-stopped
+    volumes:
+      - iwotd:/app
+
+volumes:
+  iwotd:
+
