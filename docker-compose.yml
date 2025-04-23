@@ -1,0 +1,16 @@
+services:
+  iwotd-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: interesting-website-of-the-day:latest
+    container_name: iwotd
+    ports:
+       - "3000:3000"
+    environment:
+      DB_HOST: database_hostname
+      DB_PASSWORD: database_password
+      DB_PORT: 3306
+      DB_USER: database_username
+      DB_DATABASE: database_name
+    restart: unless-stopped
