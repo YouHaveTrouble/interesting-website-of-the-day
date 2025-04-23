@@ -18,7 +18,7 @@ export default class Website {
   /**
    * Save website data along with the time
    */
-  public static async saveNewWebsite(website: Website): Promise<Website | null> {
+  public static saveNewWebsite(website: Website): Promise<Website | null> {
     return new Promise(async (resolve) => {
       if (!website) return resolve(null);
       const data = {
@@ -72,7 +72,6 @@ export default class Website {
   public static getRandomWebsite(): Promise<Website | null> {
     return new Promise((resolve, reject) => {
       try {
-        console.log(`${import.meta.env.DB_HOST}:${import.meta.env.DB_PORT}`);
         const connection = mysql.createConnection({
           host: import.meta.env.DB_HOST,
           port: import.meta.env.DB_PORT,
