@@ -19,9 +19,6 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 
-# Astro's Node adapter typically runs on port 4321 by default
-EXPOSE 3000
-
 # Set HOST env var to make the server listen on all interfaces within the container
 ENV HOST="0.0.0.0"
 # Set PORT env var (Astro Node adapter reads this)
