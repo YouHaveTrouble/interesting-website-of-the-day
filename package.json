@@ -9,12 +9,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/node": "^9.2.0",
-    "astro": "^5.7.4",
+    "@astrojs/node": "11.1.9",
+    "astro": "7.4.2",
     "mysql": "^2.18.1"
   },
   "devDependencies": {
     "@types/mysql": "^2.15.27",
-    "sass-embedded": "^1.86.3"
+    "sass-embedded": "^1.106.0"
   }
 }
